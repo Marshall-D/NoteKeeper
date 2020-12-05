@@ -6,6 +6,7 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ArrayAdapter
 import android.widget.Spinner
 
 class MainActivity : AppCompatActivity() {
@@ -16,6 +17,11 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         val spinnerCourses: Spinner = findViewById(R.id.spinner_courses)
+        val courses: List<MutableList<CourseInfo>> = listOf(DataManager.getInstance().courses)
+        val adapterCourses: ArrayAdapter<MutableList<CourseInfo>> =
+            ArrayAdapter(this, android.R.layout.simple_spinner_item,courses)
+        adapterCourses.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerCourses.adapter = adapterCourses
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
