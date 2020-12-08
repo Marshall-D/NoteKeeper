@@ -1,5 +1,6 @@
 package com.example.notekeeper
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -20,5 +21,10 @@ class NoteListActivity : AppCompatActivity() {
         val adapterNotes: ArrayAdapter<NoteInfo>? =
             notes?.let { ArrayAdapter(this, android.R.layout.simple_list_item_1, it) }
         listnotes.adapter = adapterNotes
+
+        listnotes.setOnItemClickListener { _, _, _, _ ->
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
