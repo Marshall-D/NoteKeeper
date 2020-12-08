@@ -1,11 +1,13 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-android-extensions'
 }
 
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
+
 
     defaultConfig {
         applicationId "com.example.notekeeper"
@@ -29,6 +31,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    androidExtensions {
+        experimental = true
     }
 }
 
