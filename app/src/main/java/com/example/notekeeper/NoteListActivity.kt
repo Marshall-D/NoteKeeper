@@ -16,14 +16,16 @@ class NoteListActivity : AppCompatActivity() {
     }
 
     private fun initializeDisplayContent() {
-        val listnotes: ListView = findViewById(R.id.list_notes)
+        val listNotes: ListView = findViewById(R.id.list_notes)
         var notes: List<NoteInfo> = DataManager.getInstance().notes
         val adapterNotes: ArrayAdapter<NoteInfo>? =
             notes?.let { ArrayAdapter(this, android.R.layout.simple_list_item_1, it) }
-        listnotes.adapter = adapterNotes
+        listNotes.adapter = adapterNotes
 
-        listnotes.setOnItemClickListener { _, _, _, _ ->
+        listNotes.setOnItemClickListener { _, _, position, _ ->
             val intent = Intent(this, MainActivity::class.java)
+            var note: NoteInfo = listNotes.getItemAtPosition(position) as NoteInfo
+            intent.putExtra(NOTE_INFO, note)
             startActivity(intent)
         }
     }

@@ -1,14 +1,17 @@
 package com.example.notekeeper
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 /**
  * Created by Jim.
  */
+@Parcelize
 class ModuleInfo @JvmOverloads constructor(
     val moduleId: String,
     val title: String,
-    isComplete: Boolean = false
-) {
-    var isComplete = false
+    var isComplete: Boolean = false
+) : Parcelable {
 
     override fun toString(): String {
         return title

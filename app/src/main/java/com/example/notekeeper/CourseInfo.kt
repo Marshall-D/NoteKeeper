@@ -1,13 +1,17 @@
 package com.example.notekeeper
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 /**
  * Created by Jim.
  */
+@Parcelize
 class CourseInfo(
     val courseId: String,
     val title: String,
     val modules: List<ModuleInfo>
-) {
+) : Parcelable {
 
     var modulesCompletionStatus: BooleanArray
         get() {
