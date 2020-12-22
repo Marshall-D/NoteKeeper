@@ -1,23 +1,19 @@
 package com.example.notekeeper
 
-
-
-
-
-
+import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
+import android.widget.EditText
+import android.widget.ListView
 import android.widget.Spinner
 
 
-
-
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var mNote: NoteInfo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +26,30 @@ class MainActivity : AppCompatActivity() {
                 course?.let { ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, it) }
         adapterCourses?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerCourses.adapter = adapterCourses
+
+        readDisplayStateValues()
+
+        var textNoteTitle: EditText = findViewById(R.id.text_note_title)
+        var textNoteText: EditText = findViewById(R.id.text_note_text)
+
+        displayNote(spinnerCourses, textNoteText, textNoteTitle)
+
+    }
+
+    private fun displayNote(spinnerCourses: Spinner, textNoteText: EditText, textNoteTitle: EditText) {
+        var courses: List<CourseInfo> = DataManager.getInstance().courses
+        var courseIndex = courses.indexOf(mNote.course)
+        spinnerCourses.setSelection(courseIndex)
+
+        textNoteTitle.setText(mNote.text)
+        textNoteText.setText(mNote.title)
+
+
+    }
+
+    private fun readDisplayStateValues() {
+        val intent: Intent = intent
+        mNote = intent.getParcelableExtra(NOTE_INFO)!!
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
