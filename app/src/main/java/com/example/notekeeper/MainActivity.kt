@@ -14,6 +14,8 @@ import android.widget.Spinner
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mNote: NoteInfo
+    private  var mIsNewNote: Boolean = true
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,12 +29,14 @@ class MainActivity : AppCompatActivity() {
         adapterCourses?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerCourses.adapter = adapterCourses
 
-        readDisplayStateValues()
+        if(!mIsNewNote)
+            readDisplayStateValues()
 
         var textNoteTitle: EditText = findViewById(R.id.text_note_title)
         var textNoteText: EditText = findViewById(R.id.text_note_text)
 
-        displayNote(spinnerCourses, textNoteText, textNoteTitle)
+        if(!mIsNewNote)
+            displayNote(spinnerCourses, textNoteText, textNoteTitle)
 
     }
 
@@ -50,6 +54,7 @@ class MainActivity : AppCompatActivity() {
     private fun readDisplayStateValues() {
         val intent: Intent = intent
         mNote = intent.getParcelableExtra(NOTE_INFO)!!
+        mIsNewNote = mNote == null
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
