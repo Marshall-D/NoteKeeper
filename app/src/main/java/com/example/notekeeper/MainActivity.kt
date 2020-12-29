@@ -13,8 +13,8 @@ import android.widget.Spinner
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var mNote: NoteInfo
-    // private var mIsNewNote: Boolean = false
+    private var mNote : NoteInfo? = null
+    private var mIsNewNote: Boolean = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,35 +29,36 @@ class MainActivity : AppCompatActivity() {
         adapterCourses?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerCourses.adapter = adapterCourses
 
-       // if(!mIsNewNote){
-            readDisplayStateValues()
-       // }
+
+        readDisplayStateValues()
+
 
         var textNoteTitle: EditText = findViewById(R.id.text_note_title)
         var textNoteText: EditText = findViewById(R.id.text_note_text)
 
-        //if(!mIsNewNote){
+        if(!mIsNewNote){
             displayNote(spinnerCourses, textNoteText, textNoteTitle)
-        //}
+        }
 
     }
 
     private fun displayNote(spinnerCourses: Spinner, textNoteText: EditText, textNoteTitle: EditText) {
         var courses: List<CourseInfo> = DataManager.getInstance().courses
-        var courseIndex = courses.indexOf(mNote.course)
+        var courseIndex = courses.indexOf(mNote?.course)
         spinnerCourses.setSelection(courseIndex)
 
-        textNoteTitle.setText(mNote.text)
-        textNoteText.setText(mNote.title)
+        textNoteTitle.setText(mNote?.text)
+        textNoteText.setText(mNote?.title)
 
     }
 
     private fun readDisplayStateValues() {
         val intent: Intent = intent
-        mNote = intent.getParcelableExtra(NOTE_INFO)!!
-//        if ( mNote == null){
-//            mIsNewNote = true
-//        }
+        mNote = intent.getParcelableExtra(NOTE_INFO)
+
+        if ( mNote == null){
+            mIsNewNote = true
+        }
 
     }
 
