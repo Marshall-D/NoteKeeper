@@ -13,11 +13,12 @@ class NoteListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_note_list)
+        initializeDisplayContent()
+
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-        initializeDisplayContent()
 
     }
 
