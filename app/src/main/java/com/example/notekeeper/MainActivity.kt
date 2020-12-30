@@ -7,7 +7,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.EditText
-import android.widget.ListView
 import android.widget.Spinner
 
 
@@ -54,11 +53,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun readDisplayStateValues() {
         val intent: Intent = intent
-        mNote = intent.getParcelableExtra(NOTE_INFO)
+        val position : Int = intent.getIntExtra(NOTE_POSITION, NOTE_POSITION_NOT_SET)
 
-        if ( mNote == null){
-            mIsNewNote = true
+        mIsNewNote = position == NOTE_POSITION_NOT_SET
+
+        if(!mIsNewNote){
+            mNote = DataManager.getInstance().notes[position]
         }
+
 
     }
 
