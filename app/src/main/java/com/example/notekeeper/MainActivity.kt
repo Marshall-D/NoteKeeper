@@ -17,6 +17,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mTextNoteTitle: EditText
     private lateinit var mTextNoteText: EditText
     private lateinit var mSpinnerCourses: Spinner
+    private  var mNotePosition : Int? = null
+
 
 
 
@@ -45,13 +47,26 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onPause() {
+        super.onPause()
+        saveNote()
+    }
+
+    private fun saveNote() {
+        //function for getting the notes from the textviews and spinners and saving it
+
+        mNote?.course = mSpinnerCourses.selectedItem as CourseInfo
+        mNote?.title = mTextNoteTitle.text.toString()
+        mNote?.text = mTextNoteText.text.toString()
+    }
+
     private fun displayNote(spinnerCourses: Spinner, textNoteText: EditText, textNoteTitle: EditText) {
         var courses: List<CourseInfo> = DataManager.getInstance().courses
         var courseIndex = courses.indexOf(mNote?.course)
         spinnerCourses.setSelection(courseIndex)
 
-        textNoteTitle.setText(mNote?.text)
-        textNoteText.setText(mNote?.title)
+        textNoteTitle.setText(mNote?.title)
+        textNoteText.setText(mNote?.text)
 
     }
 
@@ -61,10 +76,21 @@ class MainActivity : AppCompatActivity() {
 
         mIsNewNote = position == NOTE_POSITION_NOT_SET
 
-        if(!mIsNewNote){
+        if(mIsNewNote){
+            createNewNote()
+
+        } else {
             mNote = DataManager.getInstance().notes[position]
+
         }
 
+
+    }
+
+    private fun createNewNote() {
+        val dm : DataManager = DataManager.getInstance()
+        mNotePosition = dm.createNewNote()
+        mNote = dm.notes[mNotePosition!!]
 
     }
 
