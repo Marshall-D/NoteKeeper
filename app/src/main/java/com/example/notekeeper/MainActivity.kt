@@ -14,6 +14,10 @@ class MainActivity : AppCompatActivity() {
 
     private var mNote : NoteInfo? = null
     private var mIsNewNote: Boolean = false
+    private lateinit var mTextNoteTitle: EditText
+    private lateinit var mTextNoteText: EditText
+    private lateinit var mSpinnerCourses: Spinner
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,22 +25,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        val spinnerCourses: Spinner = findViewById(R.id.spinner_courses)
+        mSpinnerCourses = findViewById(R.id.spinner_courses)
         var course: MutableList<CourseInfo>? = DataManager.getInstance().courses
         val adapterCourses: ArrayAdapter<CourseInfo>? =
                 course?.let { ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, it) }
         adapterCourses?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerCourses.adapter = adapterCourses
+        mSpinnerCourses.adapter = adapterCourses
 
 
         readDisplayStateValues()
 
 
-        var textNoteTitle: EditText = findViewById(R.id.text_note_title)
-        var textNoteText: EditText = findViewById(R.id.text_note_text)
+        mTextNoteTitle = findViewById(R.id.text_note_title)
+        mTextNoteText = findViewById(R.id.text_note_text)
 
         if(!mIsNewNote){
-            displayNote(spinnerCourses, textNoteText, textNoteTitle)
+            displayNote(mSpinnerCourses, mTextNoteText, mTextNoteTitle)
         }
 
     }
@@ -75,8 +79,31 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_send_mail -> {
+                sendMail()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun sendMail() {
+        //function to get course title and note to send as mail with an implicit intent
+
+        // getting the text on screen and saving to variables to send in the mail
+
+        var course : CourseInfo = mSpinnerCourses.selectedItem as CourseInfo
+        var subject : String = mTextNoteTitle.text.toString()
+        var text : String = "check out what i leanred in the plural sight course" + course.title + " \n " + mTextNoteText.text.toString()
+
+        // creating the implicit intent to send the mail
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "message/rfc2822"
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+        intent.putExtra(Intent.EXTRA_TEXT, text)
+        startActivity(intent)
+
+
+
     }
 }
