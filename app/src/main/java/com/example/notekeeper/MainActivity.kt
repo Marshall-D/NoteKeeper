@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mTextNoteTitle: EditText
     private lateinit var mTextNoteText: EditText
     private lateinit var mSpinnerCourses: Spinner
-    private  var mNotePosition : Int? = null
 
 
 
@@ -28,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         mSpinnerCourses = findViewById(R.id.spinner_courses)
-        var course: MutableList<CourseInfo>? = DataManager.getInstance().courses
+        var course: List<CourseInfo>? = DataManager.instance?.courses
         val adapterCourses: ArrayAdapter<CourseInfo>? =
                 course?.let { ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, it) }
         adapterCourses?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -61,9 +60,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun displayNote(spinnerCourses: Spinner, textNoteText: EditText, textNoteTitle: EditText) {
-        var courses: List<CourseInfo> = DataManager.getInstance().courses
-        var courseIndex = courses.indexOf(mNote?.course)
-        spinnerCourses.setSelection(courseIndex)
+        var courses: List<CourseInfo>? = DataManager.instance?.courses
+        var courseIndex = courses?.indexOf(mNote?.course)
+        if (courseIndex != null) {
+            spinnerCourses.setSelection(courseIndex)
+        }
 
         textNoteTitle.setText(mNote?.title)
         textNoteText.setText(mNote?.text)
@@ -80,7 +81,7 @@ class MainActivity : AppCompatActivity() {
             createNewNote()
 
         } else {
-            mNote = DataManager.getInstance().notes[position]
+            mNote = DataManager.instance?.notes?.get(position)
 
         }
 
@@ -88,9 +89,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun createNewNote() {
-        val dm : DataManager = DataManager.getInstance()
-        mNotePosition = dm.createNewNote()
-        mNote = dm.notes[mNotePosition!!]
+        val dm : DataManager? = DataManager.instance
+        val mNotePosition : Int? = dm?.createNewNote()
+        mNote = mNotePosition?.let { dm?.notes?.get(it) }
 
     }
 

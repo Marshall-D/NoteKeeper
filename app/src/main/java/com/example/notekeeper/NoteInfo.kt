@@ -7,10 +7,10 @@ import kotlinx.android.parcel.Parcelize
  * Created by Jim.
  */
 @Parcelize
-class NoteInfo(var course: CourseInfo, var title: String, var text: String): Parcelable {
+class NoteInfo(var course: CourseInfo?, var title: String?, var text: String?): Parcelable {
 
     private val compareKey: String
-        private get() = course.courseId + "|" + title + "|" + text
+        private get() = course?.courseId + "|" + title + "|" + text
 
     override fun equals(o: Any?): Boolean {
         if (this === o) return true
