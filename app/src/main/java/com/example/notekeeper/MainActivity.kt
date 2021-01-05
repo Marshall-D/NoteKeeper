@@ -12,11 +12,14 @@ import android.widget.Spinner
 
 class MainActivity : AppCompatActivity() {
 
-    private var mNote : NoteInfo? = null
+    private var mNote: NoteInfo? = null
     private var mIsNewNote: Boolean = false
+    private var mIsCancelling: Boolean = false
+    private var mNotePosition : Int? = null
     private lateinit var mTextNoteTitle: EditText
     private lateinit var mTextNoteText: EditText
     private lateinit var mSpinnerCourses: Spinner
+
 
 
 
@@ -48,7 +51,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        saveNote()
+        if (mIsCancelling){
+            if (mIsNewNote){
+                mNotePosition?.let { DataManager.instance?.removeNote(it) }
+            }
+        }else{
+            saveNote()
+        }
     }
 
     private fun saveNote() {
@@ -65,32 +74,24 @@ class MainActivity : AppCompatActivity() {
         if (courseIndex != null) {
             spinnerCourses.setSelection(courseIndex)
         }
-
         textNoteTitle.setText(mNote?.title)
         textNoteText.setText(mNote?.text)
-
     }
 
     private fun readDisplayStateValues() {
         val intent: Intent = intent
         val position : Int = intent.getIntExtra(NOTE_POSITION, NOTE_POSITION_NOT_SET)
-
         mIsNewNote = position == NOTE_POSITION_NOT_SET
-
         if(mIsNewNote){
             createNewNote()
-
         } else {
             mNote = DataManager.instance?.notes?.get(position)
-
         }
-
-
     }
 
     private fun createNewNote() {
         val dm : DataManager? = DataManager.instance
-        val mNotePosition : Int? = dm?.createNewNote()
+        mNotePosition = dm?.createNewNote()
         mNote = mNotePosition?.let { dm?.notes?.get(it) }
 
     }
@@ -108,6 +109,11 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_send_mail -> {
                 sendMail()
+                true
+            }
+            R.id.action_cancel -> {
+                mIsCancelling  = true
+                finish()
                 true
             }
             else -> super.onOptionsItemSelected(item)
