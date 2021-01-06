@@ -60,6 +60,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+
     private fun saveNote() {
         //function for getting the notes from the textviews and spinners and saving it
 

@@ -8,6 +8,9 @@ import android.widget.ListView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class NoteListActivity : AppCompatActivity() {
+
+    private var mAdapterNotes: ArrayAdapter<NoteInfo>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_note_list)
@@ -20,12 +23,16 @@ class NoteListActivity : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        mAdapterNotes?.notifyDataSetChanged()
+    }
+
     private fun initializeDisplayContent() {
         val listNotes: ListView = findViewById(R.id.list_notes)
         var notes: List<NoteInfo>? = DataManager.instance?.notes
-        val adapterNotes: ArrayAdapter<NoteInfo>? =
-            notes?.let { ArrayAdapter(this, android.R.layout.simple_list_item_1, it) }
-        listNotes.adapter = adapterNotes
+        mAdapterNotes = notes?.let { ArrayAdapter(this, android.R.layout.simple_list_item_1, it) }
+        listNotes.adapter = mAdapterNotes
 
         listNotes.setOnItemClickListener { _, _, position, _ ->
             val intent = Intent(this, MainActivity::class.java)
