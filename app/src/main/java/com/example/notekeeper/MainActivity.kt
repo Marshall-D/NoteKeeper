@@ -16,12 +16,12 @@ class MainActivity : AppCompatActivity() {
     private var mIsNewNote: Boolean = false
     private var mIsCancelling: Boolean = false
     private var mNotePosition : Int? = null
+    private var mOriginalNoteText : String? = null
+    private var mOriginalNoteTitle : String? = null
+    private var mOriginalNoteCourseId : String? = null
     private lateinit var mTextNoteTitle: EditText
     private lateinit var mTextNoteText: EditText
     private lateinit var mSpinnerCourses: Spinner
-
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
 
         readDisplayStateValues()
+        saveOriginalNoteValues()
 
 
         mTextNoteTitle = findViewById(R.id.text_note_title)
@@ -49,18 +50,35 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun saveOriginalNoteValues() {
+        if(mIsNewNote){
+            return
+        }
+        mOriginalNoteCourseId = mNote?.course?.courseId
+        mOriginalNoteTitle = mNote?.title
+        mOriginalNoteText = mNote?.text
+    }
+
     override fun onPause() {
         super.onPause()
         if (mIsCancelling){
             if (mIsNewNote){
                 mNotePosition?.let { DataManager.instance?.removeNote(it) }
+            } else {
+                storePreviousNoteValues()
             }
         }else{
             saveNote()
         }
     }
 
+    private fun storePreviousNoteValues() {
+        val course : CourseInfo? = mOriginalNoteCourseId?.let { DataManager.instance?.getCourse(it) }
+        mNote?.course = course
+        mNote?.title = mOriginalNoteTitle
+        mNote?.text = mOriginalNoteText
 
+    }
 
     private fun saveNote() {
         //function for getting the notes from the textviews and spinners and saving it
