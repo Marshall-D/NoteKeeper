@@ -2,6 +2,7 @@ package com.example.notekeeper
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -38,7 +39,12 @@ class MainActivity : AppCompatActivity() {
 
 
         readDisplayStateValues()
-        saveOriginalNoteValues()
+
+        if (savedInstanceState == null){
+            saveOriginalNoteValues()
+        } else {
+            restoreOriginalNoteValues(savedInstanceState)
+        }
 
 
         mTextNoteTitle = findViewById(R.id.text_note_title)
@@ -50,6 +56,13 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun restoreOriginalNoteValues(savedInstanceState: Bundle) {
+        mOriginalNoteCourseId = savedInstanceState.getString(ORIGINAL_NOTE_COURSE_ID)
+        mOriginalNoteTitle = savedInstanceState.getString(ORIGINAL_NOTE_TITLE)
+        mOriginalNoteText = savedInstanceState.getString(ORIGINAL_NOTE_TEXT)
+    }
+
+
     private fun saveOriginalNoteValues() {
         if(mIsNewNote){
             return
@@ -57,6 +70,13 @@ class MainActivity : AppCompatActivity() {
         mOriginalNoteCourseId = mNote?.course?.courseId
         mOriginalNoteTitle = mNote?.title
         mOriginalNoteText = mNote?.text
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(ORIGINAL_NOTE_COURSE_ID,mOriginalNoteCourseId)
+        outState.putString(ORIGINAL_NOTE_TEXT,mOriginalNoteText)
+        outState.putString(ORIGINAL_NOTE_TITLE,mOriginalNoteTitle)
     }
 
     override fun onPause() {
