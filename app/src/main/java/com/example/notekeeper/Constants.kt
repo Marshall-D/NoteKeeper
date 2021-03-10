@@ -8,3 +8,7 @@ const val NOTE_POSITION_NOT_SET = -1
 const val ORIGINAL_NOTE_COURSE_ID  = "com.example.notekeeper.ORIGINAL_NOTE_COURSE_ID"
 const val ORIGINAL_NOTE_TEXT  = "com.example.notekeeper.ORIGINAL_NOTE_TEXT"
 const val ORIGINAL_NOTE_TITLE  = "com.example.notekeeper.ORIGINAL_NOTE_TITLE"
+
+// Constants for mainactivity tag
+const val TAG  = "MainActivity"
+

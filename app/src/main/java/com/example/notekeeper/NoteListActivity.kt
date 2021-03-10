@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class NoteListActivity : AppCompatActivity() {
-
-    private var mAdapterNotes: ArrayAdapter<NoteInfo>? = null
+//    this is adapter for listview and we are using recycler view now
+//    private var mAdapterNotes: ArrayAdapter<NoteInfo>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,20 +27,30 @@ class NoteListActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        mAdapterNotes?.notifyDataSetChanged()
+//    this is adapter for listview and we are using recycler view now
+
+//        mAdapterNotes?.notifyDataSetChanged()
     }
 
     private fun initializeDisplayContent() {
-        val listNotes: ListView = findViewById(R.id.list_notes)
-        var notes: List<NoteInfo>? = DataManager.instance?.notes
-        mAdapterNotes = notes?.let { ArrayAdapter(this, android.R.layout.simple_list_item_1, it) }
-        listNotes.adapter = mAdapterNotes
+//        val listNotes: ListView = findViewById(R.id.list_notes)
+//        var notes: List<NoteInfo>? = DataManager.instance?.notes
+//        mAdapterNotes = notes?.let { ArrayAdapter(this, android.R.layout.simple_list_item_1, it) }
+//        listNotes.adapter = mAdapterNotes
+//
+//        listNotes.setOnItemClickListener { _, _, position, _ ->
+//            val intent = Intent(this, MainActivity::class.java)
+////          var note: NoteInfo = listNotes.getItemAtPosition(position) as NoteInfo
+//            intent.putExtra(NOTE_POSITION, position)
+//            startActivity(intent)
+//        }
 
-        listNotes.setOnItemClickListener { _, _, position, _ ->
-            val intent = Intent(this, MainActivity::class.java)
-//            var note: NoteInfo = listNotes.getItemAtPosition(position) as NoteInfo
-            intent.putExtra(NOTE_POSITION, position)
-            startActivity(intent)
-        }
+//      create a local variable to hold the reference to the recycler view xml file created
+        val recyclerNotes : RecyclerView = findViewById(R.id.list_notes)
+//      create a layout manager to handle the arrangement of each item in the recycler view
+        val notesLayoutManager : RecyclerView.LayoutManager = LinearLayoutManager(this)
+//      connecting the layout manager to the recycler view
+        recyclerNotes.layoutManager = notesLayoutManager
+
     }
 }

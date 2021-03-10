@@ -2,7 +2,7 @@ package com.example.notekeeper
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         if(!mIsNewNote){
             displayNote(mSpinnerCourses, mTextNoteText, mTextNoteTitle)
         }
+        Log.d(TAG, "onCreate ")
 
     }
 
@@ -82,6 +83,7 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         if (mIsCancelling){
+            Log.i(TAG, "cancel button pressed at position:  $mNotePosition")
             if (mIsNewNote){
                 mNotePosition?.let { DataManager.instance?.removeNote(it) }
             } else {
@@ -90,6 +92,7 @@ class MainActivity : AppCompatActivity() {
         }else{
             saveNote()
         }
+        Log.d(TAG, "onPause")
     }
 
     private fun storePreviousNoteValues() {
@@ -120,19 +123,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun readDisplayStateValues() {
         val intent: Intent = intent
-        val position : Int = intent.getIntExtra(NOTE_POSITION, NOTE_POSITION_NOT_SET)
-        mIsNewNote = position == NOTE_POSITION_NOT_SET
+        mNotePosition = intent.getIntExtra(NOTE_POSITION, NOTE_POSITION_NOT_SET)
+        mIsNewNote = mNotePosition == NOTE_POSITION_NOT_SET
         if(mIsNewNote){
             createNewNote()
-        } else {
-            mNote = DataManager.instance?.notes?.get(position)
         }
+        mNote = DataManager.instance?.notes?.get(mNotePosition!!)
+
     }
 
     private fun createNewNote() {
         val dm : DataManager? = DataManager.instance
         mNotePosition = dm?.createNewNote()
-        mNote = mNotePosition?.let { dm?.notes?.get(it) }
+//        mNote = mNotePosition?.let { dm?.notes?.get(it) }
 
     }
 
