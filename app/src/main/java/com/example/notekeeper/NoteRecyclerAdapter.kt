@@ -7,12 +7,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class NoteRecyclerAdapter(private val mContext: Context) : RecyclerView.Adapter<NoteRecyclerAdapter.ViewHolder>() {
+class NoteRecyclerAdapter( mContext: Context, mListNotes: List<NoteInfo>?) : RecyclerView.Adapter<NoteRecyclerAdapter.ViewHolder>() {
     private var layoutInflater: LayoutInflater = LayoutInflater.from(mContext)
+    private var listNotes = mListNotes
+
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        var note : NoteInfo = this!!.listNotes!![position]
+        holder.textTitle.text= note.title
+        holder.textCourse.text= note.course!!.title
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -21,7 +26,7 @@ class NoteRecyclerAdapter(private val mContext: Context) : RecyclerView.Adapter<
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return listNotes!!.size
     }
 
 

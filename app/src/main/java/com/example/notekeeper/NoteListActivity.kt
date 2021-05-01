@@ -51,6 +51,10 @@ class NoteListActivity : AppCompatActivity() {
         val notesLayoutManager : RecyclerView.LayoutManager = LinearLayoutManager(this)
 //      connecting the layout manager to the recycler view
         recyclerNotes.layoutManager = notesLayoutManager
+         // get the list of notes and add them to the recycler view through the adapter
+        var notesList : List<NoteInfo>  = DataManager.instance!!.notes
+        val noteRecyclerAdapter : NoteRecyclerAdapter = NoteRecyclerAdapter(this, notesList)
+        recyclerNotes.adapter = noteRecyclerAdapter
 
     }
 }
