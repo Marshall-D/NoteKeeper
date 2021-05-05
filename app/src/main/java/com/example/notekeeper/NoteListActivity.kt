@@ -8,6 +8,7 @@ import android.widget.ListView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.activity_note_list.*
 
 class NoteListActivity : AppCompatActivity() {
 //    this is adapter for listview and we are using recycler view now
@@ -46,15 +47,15 @@ class NoteListActivity : AppCompatActivity() {
 //        }
 
 //      create a local variable to hold the reference to the recycler view xml file created
-        val recyclerNotes : RecyclerView = findViewById(R.id.list_notes)
+//        val recyclerNotes : RecyclerView = findViewById(R.id.list_notes)
 //      create a layout manager to handle the arrangement of each item in the recycler view
         val notesLayoutManager : RecyclerView.LayoutManager = LinearLayoutManager(this)
 //      connecting the layout manager to the recycler view
-        recyclerNotes.layoutManager = notesLayoutManager
+        list_notes.layoutManager = notesLayoutManager
          // get the list of notes and add them to the recycler view through the adapter
-        var notesList : List<NoteInfo>  = DataManager.instance!!.notes
-        val noteRecyclerAdapter : NoteRecyclerAdapter = NoteRecyclerAdapter(this, notesList)
-        recyclerNotes.adapter = noteRecyclerAdapter
+        var notesList: List<NoteInfo>  = DataManager.instance!!.notes
+        val noteRecyclerAdapter = NoteRecyclerAdapter( notesList)
+        list_notes.adapter = noteRecyclerAdapter
 
     }
 }
