@@ -13,6 +13,8 @@ import kotlinx.android.synthetic.main.activity_note_list.*
 class NoteListActivity : AppCompatActivity() {
 //    this is adapter for listview and we are using recycler view now
 //    private var mAdapterNotes: ArrayAdapter<NoteInfo>? = null
+      lateinit  var mNoteRecyclerAdapter: NoteRecyclerAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +33,7 @@ class NoteListActivity : AppCompatActivity() {
 //    this is adapter for listview and we are using recycler view now
 
 //        mAdapterNotes?.notifyDataSetChanged()
+        mNoteRecyclerAdapter.notifyDataSetChanged()
     }
 
     private fun initializeDisplayContent() {
@@ -54,8 +57,8 @@ class NoteListActivity : AppCompatActivity() {
         list_notes.layoutManager = notesLayoutManager
          // get the list of notes and add them to the recycler view through the adapter
         var notesList: List<NoteInfo>  = DataManager.instance!!.notes
-        val noteRecyclerAdapter = NoteRecyclerAdapter( notesList)
-        list_notes.adapter = noteRecyclerAdapter
+       mNoteRecyclerAdapter = NoteRecyclerAdapter( notesList)
+        list_notes.adapter = mNoteRecyclerAdapter
 
     }
 }
