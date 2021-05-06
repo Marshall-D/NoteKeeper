@@ -159,8 +159,16 @@ class MainActivity : AppCompatActivity() {
                 finish()
                 true
             }
+            R.id.action_next -> {
+              moveNext()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun moveNext() {
+        TODO("Not yet implemented")
     }
 
     private fun sendMail() {
