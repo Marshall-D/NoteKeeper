@@ -168,7 +168,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun moveNext() {
-        TODO("Not yet implemented")
+        saveNote()
+        mNotePosition = mNotePosition?.plus(1)
+        mNote = DataManager.instance?.notes?.get(mNotePosition!!)
+        saveOriginalNoteValues()
+        displayNote(mSpinnerCourses,mTextNoteTitle,mTextNoteText)
     }
 
     private fun sendMail() {
