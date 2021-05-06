@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_note_list.view.*
 import kotlin.properties.Delegates
@@ -48,7 +47,7 @@ class NoteRecyclerAdapter(mListNotes: List<NoteInfo>) : RecyclerView.Adapter<Rec
 
         override fun onClick(v: View) {
             val context = itemView.context
-            val intent = Intent(context, MainActivity::class.java)
+            val intent = Intent(context, NoteActivity::class.java)
             intent.putExtra(NOTE_POSITION, currentPosition)
             context.startActivity(intent)
 

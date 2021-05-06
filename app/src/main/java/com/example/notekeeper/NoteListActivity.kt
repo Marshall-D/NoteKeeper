@@ -3,8 +3,6 @@ package com.example.notekeeper
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.ListView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -22,7 +20,7 @@ class NoteListActivity : AppCompatActivity() {
         initializeDisplayContent()
 
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, NoteActivity::class.java)
             startActivity(intent)
         }
 
