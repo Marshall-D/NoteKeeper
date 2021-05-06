@@ -167,12 +167,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        var item = menu!!.findItem(R.id.action_next)
+        val lastNoteIndex = DataManager.instance!!.notes.size - 1
+        item.isEnabled = mNotePosition!! < lastNoteIndex
+        return super.onPrepareOptionsMenu(menu)
+
+    }
+
     private fun moveNext() {
         saveNote()
         mNotePosition = mNotePosition?.plus(1)
         mNote = DataManager.instance?.notes?.get(mNotePosition!!)
         saveOriginalNoteValues()
         displayNote(mSpinnerCourses,mTextNoteTitle,mTextNoteText)
+        invalidateOptionsMenu()
     }
 
     private fun sendMail() {
