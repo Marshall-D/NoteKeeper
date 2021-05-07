@@ -24,7 +24,6 @@ import kotlinx.android.synthetic.main.content_navigation.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-//    lateinit var toggle: ActionBarDrawerToggle
     lateinit  var mNoteRecyclerAdapter: NoteRecyclerAdapter
 
 
@@ -60,25 +59,11 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-//        mAdapterNotes?.notifyDataSetChanged()
         mNoteRecyclerAdapter.notifyDataSetChanged()
     }
 
     private fun initializeDisplayContent() {
-//        val listNotes: ListView = findViewById(R.id.list_notes)
-//        var notes: List<NoteInfo>? = DataManager.instance?.notes
-//        mAdapterNotes = notes?.let { ArrayAdapter(this, android.R.layout.simple_list_item_1, it) }
-//        listNotes.adapter = mAdapterNotes
-//
-//        listNotes.setOnItemClickListener { _, _, position, _ ->
-//            val intent = Intent(this, MainActivity::class.java)
-////          var note: NoteInfo = listNotes.getItemAtPosition(position) as NoteInfo
-//            intent.putExtra(NOTE_POSITION, position)
-//            startActivity(intent)
-//        }
 
-//      create a local variable to hold the reference to the recycler view xml file created
-//        val recyclerNotes : RecyclerView = findViewById(R.id.list_notes)
 //      create a layout manager to handle the arrangement of each item in the recycler view
         val notesLayoutManager : RecyclerView.LayoutManager = LinearLayoutManager(this)
 //      connecting the layout manager to the recycler view
@@ -89,7 +74,6 @@ class MainActivity : AppCompatActivity() {
         list_items.adapter = mNoteRecyclerAdapter
 
     }
-//
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
