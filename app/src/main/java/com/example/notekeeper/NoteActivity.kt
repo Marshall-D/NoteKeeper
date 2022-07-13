@@ -135,7 +135,7 @@ class NoteActivity : AppCompatActivity() {
     private fun createNewNote() {
         val dm : DataManager? = DataManager.instance
         mNotePosition = dm?.createNewNote()
-//        mNote = mNotePosition?.let { dm?.notes?.get(it) }
+        mNote = mNotePosition?.let { dm?.notes?.get(it) }
 
     }
 
