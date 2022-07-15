@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener {
+
             val intent = Intent(this, NoteActivity::class.java)
             this.startActivity(intent)
 
@@ -48,7 +49,40 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
-        navView.setNavigationItemSelectedListener(this)
+//        navView.setNavigationItemSelectedListener(this)
+        navView.setNavigationItemSelectedListener { MenuItem ->
+            when (MenuItem.itemId) {
+                R.id.nav_courses -> {
+                    Log.i("cOURSES", "Sign out clicked!")
+
+                    Toast.makeText(this, "COURSES111", Toast.LENGTH_LONG).show()
+                    true
+                }
+                R.id.nav_notes -> {
+                    Log.i("Notes", "Sign out clicked!")
+
+                    Toast.makeText(this, "NOTRES", Toast.LENGTH_LONG).show()
+                    true
+                }R.id.nav_share -> {
+                Log.i("Share", "Sign out clicked!")
+
+                Toast.makeText(this, "SARE", Toast.LENGTH_LONG).show()
+
+                true
+            }R.id.nav_send -> {
+                Log.i("Send", "Sign out clicked!")
+
+                Toast.makeText(this, "SEND", Toast.LENGTH_LONG).show()
+
+                true
+            }
+                else  ->
+                {false}
+
+            }
+
+        }
+
 //        binding.navView.setNavigationItemSelectedListener(this)
 
         val navController = findNavController(R.id.nav_host_fragment)
@@ -93,26 +127,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 //        val id = item.itemId
 
-        when (item.itemId) {
-            R.id.nav_courses -> {
-                Log.i("cOURSES", "Sign out clicked!")
-
-                Toast.makeText(this, "COURSES111", Toast.LENGTH_LONG).show()
-            }
-            R.id.nav_notes -> {
-                Log.i("Notes", "Sign out clicked!")
-
-                Toast.makeText(this, "NOTRES", Toast.LENGTH_LONG).show()
-            }R.id.nav_share -> {
-            Log.i("Share", "Sign out clicked!")
-
-            Toast.makeText(this, "SARE", Toast.LENGTH_LONG).show()
-            }R.id.nav_send -> {
-            Log.i("Send", "Sign out clicked!")
-
-            Toast.makeText(this, "SEND", Toast.LENGTH_LONG).show()
-            }
-        }
+//        when (item.itemId) {
+//            R.id.nav_courses -> {
+//                Log.i("cOURSES", "Sign out clicked!")
+//
+//                Toast.makeText(this, "COURSES111", Toast.LENGTH_LONG).show()
+//            }
+//            R.id.nav_notes -> {
+//                Log.i("Notes", "Sign out clicked!")
+//
+//                Toast.makeText(this, "NOTRES", Toast.LENGTH_LONG).show()
+//            }R.id.nav_share -> {
+//            Log.i("Share", "Sign out clicked!")
+//
+//            Toast.makeText(this, "SARE", Toast.LENGTH_LONG).show()
+//            }R.id.nav_send -> {
+//            Log.i("Send", "Sign out clicked!")
+//
+//            Toast.makeText(this, "SEND", Toast.LENGTH_LONG).show()
+//            }
+//        }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
 
         drawerLayout.closeDrawer(GravityCompat.START)
