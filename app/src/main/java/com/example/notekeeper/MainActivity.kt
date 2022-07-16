@@ -23,7 +23,7 @@ import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.content_navigation.*
 
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener  {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     lateinit var mNoteRecyclerAdapter: NoteRecyclerAdapter
@@ -49,41 +49,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
-//        navView.setNavigationItemSelectedListener(this)
-        navView.setNavigationItemSelectedListener { MenuItem ->
-            when (MenuItem.itemId) {
-                R.id.nav_courses -> {
-                    Log.i("cOURSES", "Sign out clicked!")
 
-                    Toast.makeText(this, "COURSES111", Toast.LENGTH_LONG).show()
-                    true
-                }
-                R.id.nav_notes -> {
-                    Log.i("Notes", "Sign out clicked!")
-
-                    Toast.makeText(this, "NOTRES", Toast.LENGTH_LONG).show()
-                    true
-                }R.id.nav_share -> {
-                Log.i("Share", "Sign out clicked!")
-
-                Toast.makeText(this, "SARE", Toast.LENGTH_LONG).show()
-
-                true
-            }R.id.nav_send -> {
-                Log.i("Send", "Sign out clicked!")
-
-                Toast.makeText(this, "SEND", Toast.LENGTH_LONG).show()
-
-                true
-            }
-                else  ->
-                {false}
-
-            }
-
-        }
-
-//        binding.navView.setNavigationItemSelectedListener(this)
 
         val navController = findNavController(R.id.nav_host_fragment)
 //         Passing each menu ID as a set of Ids because each
@@ -95,7 +61,40 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
         initializeDisplayContent()
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+
+
+            when (destination.id) {
+                R.id.nav_notes -> {
+                    Log.i("notes", "Sign out clicked!")
+
+                    Toast.makeText(this, "notes", Toast.LENGTH_LONG).show()
+                }
+                R.id.nav_courses -> {
+                    Log.i("courses", "Sign out clicked!")
+
+                    Toast.makeText(this, "Courses", Toast.LENGTH_LONG).show()
+                }
+                R.id.nav_send -> {
+                    Log.i("send", "Sign out clicked!")
+
+                    Toast.makeText(this, "send", Toast.LENGTH_LONG).show()
+
+                }
+                R.id.nav_share -> {
+                    Log.i("share", "Sign out clicked!")
+
+                    Toast.makeText(this, "share", Toast.LENGTH_LONG).show()
+
+                }
+
+            }
+
+        }
+
     }
 
 
@@ -124,34 +123,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-//        val id = item.itemId
-
-//        when (item.itemId) {
-//            R.id.nav_courses -> {
-//                Log.i("cOURSES", "Sign out clicked!")
-//
-//                Toast.makeText(this, "COURSES111", Toast.LENGTH_LONG).show()
-//            }
-//            R.id.nav_notes -> {
-//                Log.i("Notes", "Sign out clicked!")
-//
-//                Toast.makeText(this, "NOTRES", Toast.LENGTH_LONG).show()
-//            }R.id.nav_share -> {
-//            Log.i("Share", "Sign out clicked!")
-//
-//            Toast.makeText(this, "SARE", Toast.LENGTH_LONG).show()
-//            }R.id.nav_send -> {
-//            Log.i("Send", "Sign out clicked!")
-//
-//            Toast.makeText(this, "SEND", Toast.LENGTH_LONG).show()
-//            }
-//        }
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-
-        drawerLayout.closeDrawer(GravityCompat.START)
-        return true
-    }
 
 //    private fun handleSelection(message: String) {
 //        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
