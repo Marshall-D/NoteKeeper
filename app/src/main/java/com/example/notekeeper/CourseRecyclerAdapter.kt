@@ -5,16 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.item_courses_list.view.*
 import kotlinx.android.synthetic.main.item_note_list.view.*
+import kotlinx.android.synthetic.main.item_note_list.view.text_course
 import kotlin.properties.Delegates
 
-class NoteRecyclerAdapter(mListNotes: List<NoteInfo>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var listNotes = mListNotes
+class CourseRecyclerAdapter(mListCourses: List<CourseInfo>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var listCourses = mListCourses
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return NoteViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.item_note_list, parent, false)
+        return CourseViewHolder(
+                LayoutInflater.from(parent.context).inflate(R.layout.item_courses_list, parent, false)
         )
     }
 
@@ -22,8 +25,8 @@ class NoteRecyclerAdapter(mListNotes: List<NoteInfo>) : RecyclerView.Adapter<Rec
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder) {
 
-            is NoteViewHolder -> {
-                holder.bind(listNotes[position])
+            is CourseViewHolder -> {
+                holder.bind(listCourses[position])
                 holder.currentPosition = position
             }
 
@@ -32,14 +35,12 @@ class NoteRecyclerAdapter(mListNotes: List<NoteInfo>) : RecyclerView.Adapter<Rec
 
 
     override fun getItemCount(): Int {
-
-        return listNotes.size
+        return listCourses.size
     }
 
 
-    class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        private val textTitle : TextView = itemView.text_title
-        private val textCourse : TextView = itemView.text_course
+    inner class CourseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        private val textTitle : TextView = itemView.text_course
         var currentPosition by Delegates.notNull<Int>()
 
         init {
@@ -48,16 +49,13 @@ class NoteRecyclerAdapter(mListNotes: List<NoteInfo>) : RecyclerView.Adapter<Rec
 
         override fun onClick(v: View) {
             val context = itemView.context
-            val intent = Intent(context, NoteActivity::class.java)
-            intent.putExtra(NOTE_POSITION, currentPosition)
-            context.startActivity(intent)
+            Toast.makeText(context,listCourses[currentPosition].title, Toast.LENGTH_LONG).show()
 
         }
 
 
-        fun bind (note:NoteInfo) {
-            textTitle.text = note.title
-            textCourse.text = note.course!!.title
+        fun bind (course: CourseInfo) {
+            textTitle.text = course.title
 
         }
 

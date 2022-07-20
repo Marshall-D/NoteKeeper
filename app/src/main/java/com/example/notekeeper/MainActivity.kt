@@ -4,18 +4,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -26,7 +24,10 @@ import kotlinx.android.synthetic.main.content_navigation.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    lateinit var mNoteRecyclerAdapter: NoteRecyclerAdapter
+    private lateinit var mNoteRecyclerAdapter: NoteRecyclerAdapter
+    private lateinit var mCourseRecyclerAdapter: CourseRecyclerAdapter
+    lateinit var coursesLayoutManager: RecyclerView.LayoutManager
+    lateinit var notesLayoutManager: RecyclerView.LayoutManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,11 +70,11 @@ class MainActivity : AppCompatActivity() {
 
             when (destination.id) {
                 R.id.nav_notes -> {
-                    Log.i("notes", "Sign out clicked!")
-
-                    Toast.makeText(this, "notes", Toast.LENGTH_LONG).show()
+                    displayNotes()
                 }
                 R.id.nav_courses -> {
+
+                    displayCourses()
                     Log.i("courses", "Sign out clicked!")
 
                     Toast.makeText(this, "Courses", Toast.LENGTH_LONG).show()
@@ -98,23 +99,53 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
     override fun onResume() {
         super.onResume()
-
+// notify adapter that dataset might have changed
         mNoteRecyclerAdapter.notifyDataSetChanged()
+        mCourseRecyclerAdapter.notifyDataSetChanged()
+
     }
 
     private fun initializeDisplayContent() {
 
-//      create a layout manager to handle the arrangement of each item in the recycler view
-        val notesLayoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
+//      create a layout manager to handle the arrangement of each item in the recycler view.
+//
+        notesLayoutManager = LinearLayoutManager(this)
+        coursesLayoutManager = GridLayoutManager(this,2)
+
 //      connecting the layout manager to the recycler view
-        list_items.layoutManager = notesLayoutManager
+        list_items.layoutManager = LinearLayoutManager(this)
         // get the list of notes and add them to the recycler view through the adapter
         var notesList: List<NoteInfo> = DataManager.instance!!.notes
         mNoteRecyclerAdapter = NoteRecyclerAdapter(notesList)
-        list_items.adapter = mNoteRecyclerAdapter
+        // get the list of courses and add them to the recycler view through the adapter
 
+        var coursesList: List<CourseInfo> = DataManager.instance!!.courses
+        mCourseRecyclerAdapter = CourseRecyclerAdapter(coursesList)
+
+
+
+        displayNotes()
+
+
+    }
+
+    private fun displayCourses() {
+        //      set the layout manager for the recycler view
+        list_items.layoutManager =  GridLayoutManager(this,2)
+        // associate the adapter for recycler view with whichever adapter containing data you want
+        list_items.adapter = mCourseRecyclerAdapter
+
+    }
+    private fun displayNotes() {
+        //      set the layout manager for the recycler view
+
+        list_items.layoutManager = LinearLayoutManager(this)
+        // associate the adapter for recycler view with whichever adapter containing data you want
+
+        list_items.adapter = mNoteRecyclerAdapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -124,10 +155,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-//    private fun handleSelection(message: String) {
-//        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-
-//    }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)

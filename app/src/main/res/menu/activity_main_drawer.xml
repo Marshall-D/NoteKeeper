@@ -14,12 +14,18 @@
             android:title="@string/menu_courses" />
     </group>
     <group android:id="@+id/communicate">
+        <item
+            android:id="@+id/subtitle"
+            android:title="Communicate">
+            <menu>
+                <item
+                    android:id="@+id/nav_share"
+                    android:title="@string/menu_share" />
+                <item
+                    android:id="@+id/nav_send"
+                    android:title="@string/menu_send" />
+            </menu>
+        </item>
 
-        <item
-            android:id="@+id/nav_share"
-            android:title="@string/menu_share" />
-        <item
-            android:id="@+id/nav_send"
-            android:title="@string/menu_send" />
     </group>
 </menu>
