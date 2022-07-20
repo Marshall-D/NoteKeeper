@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                     displayCourses()
                     Log.i("courses", "Sign out clicked!")
 
-                    Toast.makeText(this, "Courses", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, getString(R.string.courses), Toast.LENGTH_LONG).show()
                 }
                 R.id.nav_send -> {
                     Log.i("send", "Sign out clicked!")
@@ -113,10 +113,10 @@ class MainActivity : AppCompatActivity() {
 //      create a layout manager to handle the arrangement of each item in the recycler view.
 //
         notesLayoutManager = LinearLayoutManager(this)
-        coursesLayoutManager = GridLayoutManager(this,2)
+        coursesLayoutManager = GridLayoutManager(this,resources.getInteger(R.integer.course_grid_span))
 
 //      connecting the layout manager to the recycler view
-        list_items.layoutManager = LinearLayoutManager(this)
+        list_items.layoutManager = notesLayoutManager
         // get the list of notes and add them to the recycler view through the adapter
         var notesList: List<NoteInfo> = DataManager.instance!!.notes
         mNoteRecyclerAdapter = NoteRecyclerAdapter(notesList)
@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun displayCourses() {
         //      set the layout manager for the recycler view
-        list_items.layoutManager =  GridLayoutManager(this,2)
+        list_items.layoutManager =  coursesLayoutManager
         // associate the adapter for recycler view with whichever adapter containing data you want
         list_items.adapter = mCourseRecyclerAdapter
 
@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity() {
     private fun displayNotes() {
         //      set the layout manager for the recycler view
 
-        list_items.layoutManager = LinearLayoutManager(this)
+        list_items.layoutManager = notesLayoutManager
         // associate the adapter for recycler view with whichever adapter containing data you want
 
         list_items.adapter = mNoteRecyclerAdapter
