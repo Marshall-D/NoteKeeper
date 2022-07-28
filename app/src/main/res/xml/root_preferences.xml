@@ -15,6 +15,15 @@
             app:title="@string/email"
             app:useSimpleSummaryProvider="true" />
 
+        <ListPreference
+            app:defaultValue="Google+"
+            app:entries="@array/fav_social_media"
+            app:entryValues="@array/fav_social_media_values"
+            app:key="fav_social_media"
+            app:title="@string/favorite_social_media"
+            app:useSimpleSummaryProvider="true" />
+
+
     </PreferenceCategory>
 
 </PreferenceScreen>
