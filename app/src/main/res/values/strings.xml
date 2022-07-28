@@ -47,11 +47,11 @@
 
     <!-- Social Media  Preferences -->
 
-    <string-array name="fav_social_media_values">
-        <item>http:google.com</item>
-        <item>http:twitter.com</item>
-        <item>http:facebook.com</item>
-    </string-array>
+<!--    <string-array name="fav_social_media_values">-->
+<!--        <item>http:google.com</item>-->
+<!--        <item>http:twitter.com</item>-->
+<!--        <item>http:facebook.com</item>-->
+<!--    </string-array>-->
 
     <string name="favorite_social_media">Favorite Social Media</string>
     <string name="pref_default_favorite_social_media">Google+</string>
