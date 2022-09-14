@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity() {
 
 
         }
+        PreferenceManager.setDefaultValues(this,R.xml.root_preferences,false)
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
