@@ -1,10 +1,13 @@
 package com.example.notekeeper
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -14,6 +17,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.preference.Preference
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -88,9 +93,7 @@ class MainActivity : AppCompatActivity() {
 
                 }
                 R.id.nav_share -> {
-                    Log.i("share", "Sign out clicked!")
-
-                    Toast.makeText(this, "share", Toast.LENGTH_LONG).show()
+                    handleShare()
 
                 }
 
@@ -100,6 +103,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun handleShare() {
+        //here we handle what happens when the share button is clicked in the navigation drawer
+        //create a toast to say share to and then input favorite social media details from sharedpreferences
+        Toast.makeText(this,
+            "share to - " + PreferenceManager.getDefaultSharedPreferences(this).getString("fav_social_media","")
+            , Toast.LENGTH_LONG).show()
+
+    }
 
 
     override fun onResume() {
@@ -107,6 +118,36 @@ class MainActivity : AppCompatActivity() {
 // notify adapter that dataset might have changed
         mNoteRecyclerAdapter.notifyDataSetChanged()
         mCourseRecyclerAdapter.notifyDataSetChanged()
+
+    // update the nav header to show name and email user inputed in settings
+        updateNavHeader()
+
+    }
+
+    private fun updateNavHeader() {
+        // to get access to the textviews in the navigation header, we need to get reference to the nav view
+        val navView: NavigationView = findViewById(R.id.nav_view)
+
+        // now we get a reference to the navigation header
+        var headerView : View = navView.getHeaderView(0)
+
+        //now you can reference the textviews for the username and email address
+        val textUserName: TextView = headerView.findViewById(R.id.text_user_name)
+        val textUserEmail: TextView =headerView.findViewById(R.id.text_email_address)
+
+        //we now neeed to intereact with the sharedpreference to get the values from it.
+        //to do that we need a refernece of type sharedpreferences
+        val pref : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+
+        // now we can get the values from sharedpreferences using the referene we just created
+        val userName : String? = pref.getString("user_name", "")
+        val email : String? = pref.getString("email_address", "")
+
+        //now we use the values to update our textviews
+        textUserName.text = userName
+        textUserEmail.text = email
+
+
 
     }
 
